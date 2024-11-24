@@ -1,0 +1,10 @@
+# Exclure le fichier contenant des clés Firebase
+firebase_key.json
+
+# Exclure les environnements virtuels Python
+venv/
+
+# Exclure les fichiers temporaires et systèmes
+*.pyc
+__pycache__/
+*.log
