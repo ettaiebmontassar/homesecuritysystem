@@ -1,0 +1,7 @@
+mongodb+srv://admin:<db_password>@cluster0.314tv.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+
+
+
+ID de l'expéditeur
+
+727099951480
