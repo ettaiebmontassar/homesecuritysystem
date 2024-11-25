@@ -9,7 +9,7 @@ from firebase_admin import credentials, messaging
 app = Flask(__name__)
 
 # Configuration MongoDB
-app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb+srv://admin:admin@cluster0.314tv.mongodb.net/home_security?retryWrites=true&w=majority&appName=Cluster0")
+app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb+srv://admin:admin@cluster0.314tv.mongodb.net/home_security?retryWrites=true&w=majority&appName=Cluster0&tls=true&tlsAllowInvalidCertificates=true")
 
 try:
     mongo = PyMongo(app)
