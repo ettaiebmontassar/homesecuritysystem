@@ -1,5 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
+import os
+import json
 import firebase_admin
 from firebase_admin import credentials, messaging
 
@@ -7,7 +9,7 @@ from firebase_admin import credentials, messaging
 app = Flask(__name__)
 
 # Configuration MongoDB
-app.config["MONGO_URI"] = "mongodb+srv://admin:admin@cluster0.314tv.mongodb.net/home_security?retryWrites=true&w=majority&appName=Cluster0"
+app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb+srv://admin:admin@cluster0.314tv.mongodb.net/home_security?retryWrites=true&w=majority&appName=Cluster0")
 
 try:
     mongo = PyMongo(app)
@@ -17,8 +19,13 @@ except Exception as e:
 
 # Configuration Firebase
 try:
-    cred = credentials.Certificate("firebase_key.json")
-    firebase_admin.initialize_app(cred)
+    firebase_credentials = os.getenv("FIREBASE_CREDENTIALS")
+    if firebase_credentials:
+        creds_dict = json.loads(firebase_credentials)
+        cred = credentials.Certificate(creds_dict)
+        firebase_admin.initialize_app(cred)
+    else:
+        raise Exception("La variable d'environnement FIREBASE_CREDENTIALS est manquante.")
 except Exception as e:
     print("Erreur de configuration Firebase :", e)
 
@@ -94,4 +101,3 @@ def get_alerts():
 # Point d'entrée principal
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-
